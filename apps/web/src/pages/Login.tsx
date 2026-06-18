@@ -79,7 +79,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0D2D6B] via-[#0D2D6B] to-[#1a3a7a]">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#93C5FD] via-[#BFDBFE] to-[#DBEAFE]">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
         <div className="bg-[#0D2D6B] px-8 py-7 text-center border-b border-[#16468E]">
           <img src="/homecare/images/logo_cacsb_blanc.png" alt="HomeCare Soft" className="h-14 mx-auto mb-3" />

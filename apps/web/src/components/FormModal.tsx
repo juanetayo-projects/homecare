@@ -83,7 +83,7 @@ export default function FormModal({
         ref={dialogRef}
         className={`relative bg-white rounded-xl shadow-2xl border border-gray-200 w-full ${width} max-h-[90vh] flex flex-col`}
       >
-        <div className="flex items-center justify-between px-6 py-4 bg-[#93C5FD] shrink-0 rounded-t-xl">
+        <div className="flex items-center justify-between px-6 py-4 bg-[#0D2D6B] shrink-0 rounded-t-xl">
           <h2 className="text-lg font-semibold text-white">{title}</h2>
           <button
             type="button"
