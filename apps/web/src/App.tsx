@@ -4,6 +4,9 @@ import { useAuthStore } from './stores/auth'
 import Layout from './components/Layout'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import PacientesList from './pages/PacientesList'
+import PacientesForm from './pages/PacientesForm'
+import PlaceholderPage from './pages/PlaceholderPage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.user)
@@ -40,6 +43,40 @@ function App() {
           }
         >
           <Route path="/" element={<Dashboard />} />
+          <Route path="/pacientes" element={<PacientesList />} />
+          <Route path="/pacientes/nuevo" element={<PacientesForm />} />
+          <Route path="/pacientes/:id" element={<PlaceholderPage title="Editar Paciente" />} />
+
+          {['/historias/apertura', '/historias/apertura/nueva', '/historias/evolucion', '/historias/evol-control', '/historias/epicrisis'].map((p) => (
+            <Route key={p} path={p} element={<PlaceholderPage title="Historia Clínica" description="Módulo en construcción" />} />
+          ))}
+
+          {['/historias/enfermeria', '/historias/nutricion', '/historias/gerontologia', '/historias/psicologia'].map((p) => (
+            <Route key={p} path={p} element={<PlaceholderPage title="Historia Clínica" description="Módulo en construcción" />} />
+          ))}
+
+          {['/historias/terapias/respiratoria', '/historias/terapias/fisica', '/historias/terapias/ocupacional', '/historias/terapias/fonoaudiologia'].map((p) => (
+            <Route key={p} path={p} element={<PlaceholderPage title="Terapia" description="Módulo en construcción" />} />
+          ))}
+
+          <Route path="/agenda" element={<PlaceholderPage title="Agenda de Citas" description="Calendario de citas" />} />
+          <Route path="/programacion" element={<PlaceholderPage title="Programación de Servicios" description="Asignación de paquetes y servicios por paciente" />} />
+
+          {['/informes/masivas', '/informes/asignacion-profesionales', '/informes/cuentas-cobro', '/informes/resumen-cuentas-cobro', '/informes/gestion-humana', '/informes/datos-pacientes', '/informes/derivados'].map((p) => (
+            <Route key={p} path={p} element={<PlaceholderPage title="Informes" description="Módulo en construcción" />} />
+          ))}
+
+          {['/datos/entidades', '/datos/contratos', '/datos/paquetes', '/datos/articulos', '/datos/tablas', '/datos/calendario', '/datos/profesionales', '/datos/usuarios'].map((p) => (
+            <Route key={p} path={p} element={<PlaceholderPage title="Datos Maestros" description="Módulo en construcción" />} />
+          ))}
+
+          {['/admin/actividades', '/admin/copiar-mes', '/admin/alimentar-nomina', '/admin/subir-firmas', '/admin/firmas-registradas', '/admin/documentos', '/admin/infografias'].map((p) => (
+            <Route key={p} path={p} element={<PlaceholderPage title="Administración" description="Módulo en construcción" />} />
+          ))}
+
+          {['/admin/historias/auditoria', '/admin/historias/abrir-aperturas', '/admin/historias/abrir-evoluciones', '/admin/historias/abrir-evol-control', '/admin/historias/abrir-terapias', '/admin/historias/abrir-enfermeria', '/admin/historias/historias-clinicas', '/admin/historias/soportes-facturacion', '/admin/historias/historias-profesionales', '/admin/historias/historias-fecha'].map((p) => (
+            <Route key={p} path={p} element={<PlaceholderPage title="Administración de Historias" description="Módulo en construcción" />} />
+          ))}
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
