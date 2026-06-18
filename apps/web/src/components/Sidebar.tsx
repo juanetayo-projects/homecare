@@ -29,7 +29,7 @@ function NavItemComponent({ item, depth = 0 }: { item: NavItem; depth?: number }
           onClick={() => setOpen(!open)}
           className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors ${
             isActiveGroup
-              ? 'bg-blue-50 text-blue-700 font-medium'
+              ? 'bg-[#E8F0FE] text-[#0D2D6B] font-medium'
               : 'text-gray-700 hover:bg-gray-100'
           }`}
           style={{ paddingLeft: `${12 + depth * 16}px` }}
@@ -53,7 +53,7 @@ function NavItemComponent({ item, depth = 0 }: { item: NavItem; depth?: number }
       to={item.path || '#'}
       className={`block px-3 py-2 text-sm rounded-md transition-colors ${
         isActive
-          ? 'bg-blue-50 text-blue-700 font-medium'
+          ? 'bg-[#E8F0FE] text-[#0D2D6B] font-medium'
           : 'text-gray-700 hover:bg-gray-100'
       }`}
       style={{ paddingLeft: `${12 + depth * 16}px` }}
@@ -74,7 +74,10 @@ export default function Sidebar() {
     >
       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
         {!collapsed && (
-          <span className="font-bold text-gray-900 text-lg">HomeCare Soft</span>
+          <div className="flex items-center gap-2">
+            <img src="/homecare/images/logo_cacsb2.png" alt="HomeCare Soft" className="h-8" />
+            <span className="font-bold text-[#0D2D6B] text-lg">HomeCare Soft</span>
+          </div>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}

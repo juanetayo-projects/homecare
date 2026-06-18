@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+  --color-corporate-900: #0D2D6B;
+  --color-corporate-700: #16468E;
+  --color-corporate-500: #1E5DB6;
+  --color-corporate-300: #4A8AD4;
+  --color-corporate-100: #E8F0FE;
+}
