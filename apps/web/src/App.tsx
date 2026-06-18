@@ -7,6 +7,12 @@ import Dashboard from './pages/Dashboard'
 import PacientesList from './pages/PacientesList'
 import PacientesForm from './pages/PacientesForm'
 import PlaceholderPage from './pages/PlaceholderPage'
+import EntidadesPage from './pages/config/EntidadesPage'
+import ContratosPage from './pages/config/ContratosPage'
+import ServiciosPage from './pages/config/ServiciosPage'
+import ArticulosPage from './pages/config/ArticulosPage'
+import TablasPage from './pages/config/TablasPage'
+import CalendarioPage from './pages/config/CalendarioPage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.user)
@@ -66,9 +72,14 @@ function App() {
             <Route key={p} path={p} element={<PlaceholderPage title="Informes" description="Módulo en construcción" />} />
           ))}
 
-          {['/datos/entidades', '/datos/contratos', '/datos/paquetes', '/datos/articulos', '/datos/tablas', '/datos/calendario', '/datos/profesionales', '/datos/usuarios'].map((p) => (
-            <Route key={p} path={p} element={<PlaceholderPage title="Datos Maestros" description="Módulo en construcción" />} />
-          ))}
+          <Route path="/datos/entidades" element={<EntidadesPage />} />
+          <Route path="/datos/contratos" element={<ContratosPage />} />
+          <Route path="/datos/paquetes" element={<ServiciosPage />} />
+          <Route path="/datos/articulos" element={<ArticulosPage />} />
+          <Route path="/datos/tablas" element={<TablasPage />} />
+          <Route path="/datos/calendario" element={<CalendarioPage />} />
+          <Route path="/datos/profesionales" element={<PlaceholderPage title="Profesionales" description="Módulo en construcción" />} />
+          <Route path="/datos/usuarios" element={<PlaceholderPage title="Usuarios" description="Módulo en construcción" />} />
 
           {['/admin/actividades', '/admin/copiar-mes', '/admin/alimentar-nomina', '/admin/subir-firmas', '/admin/firmas-registradas', '/admin/documentos', '/admin/infografias'].map((p) => (
             <Route key={p} path={p} element={<PlaceholderPage title="Administración" description="Módulo en construcción" />} />
