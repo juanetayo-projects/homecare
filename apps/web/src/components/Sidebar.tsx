@@ -29,8 +29,8 @@ function NavItemComponent({ item, depth = 0 }: { item: NavItem; depth?: number }
           onClick={() => setOpen(!open)}
           className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-md transition-colors ${
             isActiveGroup
-              ? 'bg-[#E8F0FE] text-[#0D2D6B] font-medium'
-              : 'text-gray-700 hover:bg-gray-100'
+              ? 'bg-[#16468E] text-white font-medium'
+              : 'text-blue-200 hover:bg-[#16468E] hover:text-white'
           }`}
           style={{ paddingLeft: `${12 + depth * 16}px` }}
         >
@@ -53,8 +53,8 @@ function NavItemComponent({ item, depth = 0 }: { item: NavItem; depth?: number }
       to={item.path || '#'}
       className={`block px-3 py-2 text-sm rounded-md transition-colors ${
         isActive
-          ? 'bg-[#E8F0FE] text-[#0D2D6B] font-medium'
-          : 'text-gray-700 hover:bg-gray-100'
+          ? 'bg-[#16468E] text-white font-medium'
+          : 'text-blue-200 hover:bg-[#16468E] hover:text-white'
       }`}
       style={{ paddingLeft: `${12 + depth * 16}px` }}
     >
@@ -68,27 +68,32 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`bg-white border-r border-gray-200 overflow-y-auto transition-all duration-200 ${
+      className={`bg-[#0D2D6B] overflow-y-auto transition-all duration-200 flex flex-col ${
         collapsed ? 'w-16' : 'w-64'
       }`}
     >
-      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+      <div className="p-4 border-b border-[#16468E]">
         {!collapsed && (
-          <div className="flex items-center gap-2">
-            <img src="/homecare/images/logo_cacsb2.png" alt="HomeCare Soft" className="h-8" />
-            <span className="font-bold text-[#0D2D6B] text-lg">HomeCare Soft</span>
+          <div className="flex flex-col items-center gap-1">
+            <img src="/homecare/images/logo_cacsb_blanc.png" alt="HomeCare Soft" className="h-12" />
+            <span className="font-bold text-white text-sm">HomeCare Soft</span>
+          </div>
+        )}
+        {collapsed && (
+          <div className="flex justify-center">
+            <img src="/homecare/images/logo_cacsb_blanc.png" alt="HomeCare Soft" className="h-8" />
           </div>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="p-1 rounded hover:bg-gray-100 text-gray-500"
+          className="mt-2 mx-auto block p-1 rounded hover:bg-[#16468E] text-blue-200 hover:text-white transition-colors"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d={collapsed ? 'm9 18 6-6-6-6' : 'm15 18-6-6 6-6'} />
           </svg>
         </button>
       </div>
-      <nav className="p-2 space-y-1">
+      <nav className="p-2 space-y-1 flex-1">
         {navigation.map((item, i) => (
           <NavItemComponent key={i} item={item} />
         ))}
