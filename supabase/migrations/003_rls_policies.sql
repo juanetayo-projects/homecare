@@ -41,10 +41,10 @@ alter table infografias enable row level security;
 alter table calendario_festivos enable row level security;
 alter table audit_log enable row level security;
 
--- Pol�tica base: solo usuarios autenticados
-create policy "Acceso solo usuarios autenticados"
+-- Pol�tica base: sedes accesible por todos (necesario para login)
+create policy "Sedes lectura publica"
   on sedes for select
-  using (auth.role() = 'authenticated');
+  using (true);
 
 create policy "Acceso solo usuarios autenticados"
   on roles for select

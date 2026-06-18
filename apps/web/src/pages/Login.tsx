@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../stores/auth'
 import { supabase } from '../lib/supabase'
@@ -18,23 +18,24 @@ export default function Login() {
   const [sedes, setSedes] = useState<Sede[]>([])
   const [sedeId, setSedeId] = useState('')
   const [step, setStep] = useState<'credentials' | 'sede'>('credentials')
-  const [loadingSedes, setLoadingSedes] = useState(false)
+  const [loadingSedes, setLoadingSedes] = useState(true)
   const signIn = useAuthStore((s) => s.signIn)
   const setSedeActiva = useAuthStore((s) => s.setSedeActiva)
   const navigate = useNavigate()
 
-  async function loadSedes() {
-    setLoadingSedes(true)
-    const { data, error } = await supabase.from('sedes').select('id, nombre, ciudad').eq('activo', true).order('nombre')
-    if (error) {
-      console.error('Error cargando sedes:', error)
+  useEffect(() => {
+    async function loadSedes() {
+      setLoadingSedes(true)
+      const { data, error } = await supabase.from('sedes').select('id, nombre, ciudad').order('nombre')
+      if (error) console.error('Error cargando sedes:', error)
+      if (data && data.length > 0) {
+        setSedes(data)
+        setSedeId(data[0].id)
+      }
+      setLoadingSedes(false)
     }
-    if (data) {
-      setSedes(data)
-      if (data.length > 0) setSedeId(data[0].id)
-    }
-    setLoadingSedes(false)
-  }
+    loadSedes()
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -43,7 +44,6 @@ export default function Login() {
     if (step === 'credentials') {
       try {
         await signIn(email, password)
-        await loadSedes()
         setStep('sede')
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error al iniciar sesión')
@@ -153,6 +153,35 @@ export default function Login() {
                   </div>
                 </div>
 
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                    Sede
+                  </label>
+                  {loadingSedes ? (
+                    <div className="flex items-center gap-2 px-3 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-500">
+                      <div className="w-4 h-4 border-2 border-[#0D2D6B] border-t-transparent rounded-full animate-spin" />
+                      Cargando sedes...
+                    </div>
+                  ) : sedes.length === 0 ? (
+                    <div className="px-3 py-2.5 border border-red-300 rounded-lg text-sm text-red-600 bg-red-50">
+                      No hay sedes disponibles. Contacte al administrador.
+                    </div>
+                  ) : (
+                    <select
+                      value={sedeId}
+                      onChange={(e) => setSedeId(e.target.value)}
+                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0D2D6B] focus:border-transparent bg-white transition"
+                      required
+                    >
+                      {sedes.map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.nombre} - {s.ciudad}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+
                 <button
                   type="submit"
                   className="w-full bg-[#0D2D6B] text-white py-2.5 rounded-lg hover:bg-[#16468E] transition font-medium text-sm shadow-sm"
@@ -169,42 +198,31 @@ export default function Login() {
                     </svg>
                   </div>
                   <p className="text-sm text-gray-600">Sesión iniciada correctamente</p>
-                  <p className="text-xs text-gray-400 mt-1">Seleccione la sede desde la cual trabajará</p>
+                  <p className="text-xs text-gray-400 mt-1">Confirme la sede desde la cual trabajará</p>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">
                     Sede
                   </label>
-                  {loadingSedes ? (
-                    <div className="flex items-center gap-2 px-3 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-500">
-                      <div className="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-                      Cargando sedes...
-                    </div>
-                  ) : sedes.length === 0 ? (
-                    <div className="px-3 py-2.5 border border-red-300 rounded-lg text-sm text-red-600 bg-red-50">
-                      No hay sedes disponibles. Contacte al administrador.
-                    </div>
-                  ) : (
-                    <select
-                      value={sedeId}
-                      onChange={(e) => setSedeId(e.target.value)}
-                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0D2D6B] focus:border-transparent bg-white transition"
-                      required
-                      autoFocus
-                    >
-                      {sedes.map((s) => (
-                        <option key={s.id} value={s.id}>
-                          {s.nombre} - {s.ciudad}
-                        </option>
-                      ))}
-                    </select>
-                  )}
+                  <select
+                    value={sedeId}
+                    onChange={(e) => setSedeId(e.target.value)}
+                    className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0D2D6B] focus:border-transparent bg-white transition"
+                    required
+                    autoFocus
+                  >
+                    {sedes.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.nombre} - {s.ciudad}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <button
                   type="submit"
-                  disabled={!sedeId || loadingSedes}
+                  disabled={!sedeId}
                   className="w-full bg-[#0D2D6B] text-white py-2.5 rounded-lg hover:bg-[#16468E] transition font-medium text-sm shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Entrar al Sistema
@@ -212,7 +230,7 @@ export default function Login() {
 
                 <button
                   type="button"
-                  onClick={() => { setStep('credentials'); setError(''); setSedes([]) }}
+                  onClick={() => { setStep('credentials'); setError('') }}
                   className="w-full text-gray-500 hover:text-gray-700 text-sm py-1 transition-colors"
                 >
                   ← Volver al login
