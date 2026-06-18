@@ -13,6 +13,7 @@ import ServiciosPage from './pages/config/ServiciosPage'
 import ArticulosPage from './pages/config/ArticulosPage'
 import TablasPage from './pages/config/TablasPage'
 import CalendarioPage from './pages/config/CalendarioPage'
+import SedesPage from './pages/config/SedesPage'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const user = useAuthStore((s) => s.user)
@@ -72,6 +73,7 @@ function App() {
             <Route key={p} path={p} element={<PlaceholderPage title="Informes" description="Módulo en construcción" />} />
           ))}
 
+          <Route path="/datos/sedes" element={<SedesPage />} />
           <Route path="/datos/entidades" element={<EntidadesPage />} />
           <Route path="/datos/contratos" element={<ContratosPage />} />
           <Route path="/datos/paquetes" element={<ServiciosPage />} />

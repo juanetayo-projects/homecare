@@ -67,6 +67,7 @@ export const navigation: NavItem[] = [
     label: 'Datos',
     icon: 'database',
     children: [
+      { label: 'Sedes', path: '/datos/sedes' },
       { label: 'Entidades (EPS)', path: '/datos/entidades' },
       { label: 'Contratos', path: '/datos/contratos' },
       { label: 'Paquetes de Servicios', path: '/datos/paquetes' },

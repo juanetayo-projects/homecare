@@ -46,6 +46,11 @@ create policy "Sedes lectura publica"
   on sedes for select
   using (true);
 
+create policy "Sedes CRUD autenticado"
+  on sedes for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+
 create policy "Acceso solo usuarios autenticados"
   on roles for select
   using (auth.role() = 'authenticated');
