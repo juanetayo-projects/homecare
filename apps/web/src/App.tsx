@@ -51,7 +51,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/pacientes" element={<PacientesList />} />
           <Route path="/pacientes/nuevo" element={<PacientesForm />} />
-          <Route path="/pacientes/:id" element={<PlaceholderPage title="Editar Paciente" />} />
+          <Route path="/pacientes/:id" element={<PacientesForm />} />
 
           {['/historias/apertura', '/historias/apertura/nueva', '/historias/evolucion', '/historias/evol-control', '/historias/epicrisis'].map((p) => (
             <Route key={p} path={p} element={<PlaceholderPage title="Historia Clínica" description="Módulo en construcción" />} />
